@@ -1,0 +1,42 @@
+export B2G_DIR=$(cd $(dirname $0); pwd)
+echo "B2G_DIR = ${B2G_DIR}"
+
+export ROOT_DIR=$(cd $B2G_DIR/..; pwd)
+echo "ROOT_DIR = ${ROOT_DIR}"
+
+LOCAL_CONFIG="${B2G_DIR}/.local-userconfig"
+if [ -f "${LOCAL_CONFIG}" ]; then
+  echo "Sourcing ${LOCAL_CONFIG}"
+  source "${LOCAL_CONFIG}"
+fi
+
+GECKO_BRANCH="b2g18"
+GAIA_BRANCH="v1-train"
+if [ "$BRANCH" = "master" ]; then
+  GECKO_BRANCH="central"
+  GAIA_BRANCH="master"
+fi
+
+export GECKO_PATH="${ROOT_DIR}/mozilla-${GECKO_BRANCH}"
+echo "GECKO_PATH = ${GECKO_PATH}"
+
+export GAIA_PATH="${ROOT_DIR}/gaia-${GAIA_BRANCH}"
+echo "GAIA_PATH = ${GAIA_PATH}"
+
+export B2G_DEBUG=${B2G_DEBUG:-0}
+echo "B2G_DEBUG = ${B2G_DEBUG}"
+
+export NOFTU=${NOFTU:-1}
+echo "NOFTU = ${NOFTU}"
+
+export GECKO_OBJDIR=${GECKO_PATH}/objdir-gonk
+if [ "${B2G_DEBUG}" != "0" ]; then
+  export GECKO_OBJDIR=${GECKO_OBJDIR}-debug
+fi
+if [ "${GECKO_PATH/*mozilla-inbound*/mozilla-inbound}" = "mozilla-inbound" ]; then
+  export GECKO_OBJDIR=${GECKO_OBJDIR}-m-i
+fi
+if [ "${GECKO_PATH/*mozilla-central*/mozilla-central}" = "mozilla-central" ]; then
+  export GECKO_OBJDIR=${GECKO_OBJDIR}-m-c
+fi
+echo "GECKO_OBJDIR = ${GECKO_OBJDIR}"
