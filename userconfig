@@ -20,8 +20,11 @@ fi
 export GECKO_PATH="${ROOT_DIR}/mozilla-${GECKO_BRANCH}"
 echo "GECKO_PATH = ${GECKO_PATH}"
 
-export GAIA_PATH="${ROOT_DIR}/gaia-${GAIA_BRANCH}"
-echo "GAIA_PATH = ${GAIA_PATH}"
+#
+# Sadly, GAIA_PATH does nothing and may be prevent correct var from being set
+#
+#export GAIA_PATH="${ROOT_DIR}/gaia-${GAIA_BRANCH}"
+#echo "GAIA_PATH = ${GAIA_PATH}"
 
 export B2G_DEBUG=${B2G_DEBUG:-0}
 echo "B2G_DEBUG = ${B2G_DEBUG}"
@@ -30,6 +33,9 @@ export NOFTU=${NOFTU:-1}
 echo "NOFTU = ${NOFTU}"
 
 export GECKO_OBJDIR=${GECKO_PATH}/objdir-gonk
+if [ "${PROJECT}" = "emulator" ]; then
+  export GECKO_OBJDIR=${GECKO_OBJDIR}-emu
+fi
 if [ "${B2G_DEBUG}" != "0" ]; then
   export GECKO_OBJDIR=${GECKO_OBJDIR}-debug
 fi
