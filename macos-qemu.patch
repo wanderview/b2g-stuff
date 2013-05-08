@@ -1,0 +1,12 @@
+diff --git a/Makefile.android b/Makefile.android
+index 195c061..178c81e 100644
+--- a/Makefile.android
++++ b/Makefile.android
+@@ -75,6 +75,7 @@ endif
+ 
+ ifeq ($(HOST_OS),darwin)
+     MY_CFLAGS += -mdynamic-no-pic -D_DARWIN_C_SOURCE=1
++    MY_CFLAGS += -DM_PI=3.14159265358979323846264338327950288
+ 
+     # When building on Leopard or above, we need to use the 10.4 SDK
+     # or the generated binary will not run on Tiger.
