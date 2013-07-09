@@ -34,8 +34,18 @@ if [ ! -x "$FIREFOX" ] ; then
   exit 1
 fi
 
+#
+# Verify firefox version is new enough
+#
+VERSION=`$FIREFOX --version | awk '{print $3}'`
+REQ_VERSION='22'
+if expr "$VERSION" \< "$REQ_VERSION" >/dev/null ; then
+  echo "$SELF: Firefox is only version $VERSION; use $REQ_VERSION or newer."
+  exit 1
+fi
+
 echo "$SELF: Using gaia at '$GAIADIR'."
-echo "$SELF: Using firefox at '$FIREFOX'."
+echo "$SELF: Using Firefox $VERSION at '$FIREFOX'."
 
 cd $GAIADIR
 
