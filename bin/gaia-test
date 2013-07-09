@@ -3,6 +3,32 @@
 SELF=`basename $0`
 
 #
+# Run the gaia unit test agent server and with firefox.
+#
+# Basic usage:
+#
+#   gaia-test <gaia location> <firefox binary>
+#
+# The both parameters are optional.
+#
+# The gaia directory to test is found using the following heuristic:
+#   1) If the gaia location specified on the command line is a directory,
+#      then use it.
+#   2) If the gaia location specified on the command line is not a directory,
+#      try appending it to "$FXOS_HOME/gaia-".  This is a shortcut for working
+#      with multiple checkouts of gaia.
+#   3) If the gaia location is not specified, use the $GAIADIR environment
+#      variable.
+#   4) If the environment variable is not specified either, then use
+#      "$FXOS-HOME/gaia-master"
+#
+# The firefox binary is found using the following heuristic:
+#   1) If the firefox binary is specified on the command line, then attempt
+#      to find it in the path if its relative or just use it if its absolute.
+#   2) Look up "firefox" in the path.
+#
+
+#
 # Configure gaia location
 #
 if [ "$1" = "" ] ; then
@@ -19,6 +45,8 @@ if [ ! -d "$GAIADIR" ] ; then
   echo "$SELF: '$GAIADIR' is not a directory!"
   exit 1
 fi
+
+GAIADIR=`readlink -f $GAIADIR`
 
 #
 # Configure firefox test binary
