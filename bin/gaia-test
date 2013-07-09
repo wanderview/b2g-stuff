@@ -6,7 +6,11 @@ SELF=`basename $0`
 # Configure gaia location
 #
 if [ "$1" = "" ] ; then
-  GAIADIR="$FXOS_HOME/gaia-master"
+  if [ "$GAIADIR" = "" ] ; then
+    GAIADIR="$FXOS_HOME/gaia-master"
+  fi
+elif [ -d "$1" ] ; then
+  GAIADIR="$1"
 else
   GAIADIR="$FXOS_HOME/gaia-$1"
 fi
