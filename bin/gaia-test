@@ -47,6 +47,19 @@ fi
 echo "$SELF: Using gaia at '$GAIADIR'."
 echo "$SELF: Using Firefox $VERSION at '$FIREFOX'."
 
+#
+# Verify additional dependencies are installed
+#
+NODE=`which node`
+NPM=`which npm`
+if [ ! -x "$NODE" ] ; then
+  echo "$SELF: Unable to find node; please install node.js."
+  exit 1
+elif [ ! -x "$NPM" ] ; then
+  echo "$SELF: Unable to find npm; please install npm."
+  exit 1
+fi
+
 cd $GAIADIR
 
 #
